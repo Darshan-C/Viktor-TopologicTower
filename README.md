@@ -45,11 +45,11 @@ Building Graph create a graph of a designed building.
 
 # Do you want to create an app by yourself?
 
-If you want to try to create an VIKTOR app using the same code, feel free to do so.
+If you wish to try to create a VIKTOR app using the same code, feel free to do so.
 
 ## Steps
 
-1. Download the gitub file.
+1. Clone the repository.
 2. Create an account of [VIKTOR](https://www.viktor.ai/start-building-apps).
 3. Create an app in your account. For more info visit [VIKTOR Doc link](https://docs.viktor.ai/docs/getting-started/create-first-app)
 4. Clear the database with "viktor-cli clear"
