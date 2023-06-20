@@ -57,7 +57,7 @@ If you want to try to create an VIKTOR app using the same code, feel free to do 
 6. Start your app with "viktor-cli start"
 7. Check the app status with "viktor-cli apps"
 8. Publish your app by "viktor-cli publish --registered-name <insert-app-name-here> --tag v0.1.0"
-9. Go to the your https://cloud.viktor.ai/( The link you get when you start your app[6])
+9. Go to the your https://cloud.viktor.ai/ (The link you get when you start your app[6])
 10. Click on Apps > Create Workspace. (For more info click [here](https://docs.viktor.ai/docs/getting-started/publish-app))
 11. Currently you an view the app in Development workspace, as it is getting some error when treid to publish. The app is workable but currently having issue while publishing.
 12. Workspace>Development> Open to view the app.
