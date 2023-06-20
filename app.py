@@ -27,11 +27,13 @@ class Parametrization(ViktorParametrization) :
 
     tab_0 = Tab ("Introduction")
     tab_0.section_1 = Section("About")
-    tab_0.section_1.text = Text(" The project involves using a Topologic Python library to create a tower within the VIKTOR app. The main objective of this project is to demonstrate the integration of the Topologic library with the VIKTOR app.\nThe integration of the Topologic library with the VIKTOR app enables users to explore and manipulate the tower's design and some features, allowing for a more interactive and dynamic architectural experience. This project aims to showcase the seamless integration of these two technologies, highlighting the potential for advanced geometric modeling and design analysis capabilities within the VIKTOR app.")
+    tab_0.section_1.text_1= Text(" The project involves using a Topologic Python library to create a tower within the VIKTOR app. The main objective of this project is to demonstrate the integration of the Topologic library with the VIKTOR app.\nThe integration of the Topologic library with the VIKTOR app enables users to explore and manipulate the tower's design and some features, allowing for a more interactive and dynamic architectural experience. This project aims to showcase the seamless integration of these two technologies, highlighting the potential for advanced geometric modeling and design analysis capabilities within the VIKTOR app.\n")
+    tab_0.section_1.text_2 = Text(" Note: To run the app, please sequentially go through the tab, i.e., Podium > Internal Faces > External Faces > Adjacent Blocks > Building Graph")
+    
     tab_0.section_2 = Section("More Info")
-    tab_0.section_2.text_1  = Text("Tower Tab visualise the tower design.\n Adjacent Block tab give an adjacent blocks of a selected block. Building Graph create a graph of a designed building.\n")
-    tab_0.section_2.text_2  = Text("Internal faces tab displays the vertical internal faces, either of a particular floor or of a whole building.\n")
-    tab_0.section_2.text_3 = Text("External faces tab displays the External faces, either of a particular floor or of a whole building.\n")
+    tab_0.section_2.text_1  = Text("Tower tab visualise the complete tower design.")
+    tab_0.section_2.text_2  = Text("Internal Faces tab displays the vertical internal faces, either of a particular floor or of a whole building.\n")
+    tab_0.section_2.text_3 = Text("External Faces tab displays the External faces, either of a particular floor or of a whole building.\n")
     tab_0.section_2.text_4 = Text("Adjacent Block tab give an adjacent blocks of a selected block.\n")
     tab_0.section_2.text_5 = Text("Building Graph create a graph of a designed building.\n")
 
@@ -50,14 +52,14 @@ class Parametrization(ViktorParametrization) :
     tab_1.section_1.PodscaleF = NumberField("Pod Window Size", default= 0.4, step= 0.1, suffix= "m", variant="slider", min=0.4, max=0.8)
    
     
-    tab_1.section_2 = Section("Podium Parameters")
+    tab_1.section_2 = Section("Building Parameters")
     tab_1.section_2.bldgWsplit = NumberField("Building Width Split", default= 3, step= 1, suffix= "m",  variant="slider", min=1, max=6)
     tab_1.section_2.bldgLsplit = NumberField("Building Length Split", default= 3, step= 1, suffix= "m",  variant="slider", min=1, max=6)
     tab_1.section_2.bldgFlrHt = NumberField("Building Floor Ht", default= 3, step= 1, suffix= "m", variant="slider", min=3, max=4)
     tab_1.section_2.bldgNoOfFlr = NumberField("No. of Building Flrs", default= 4, step= 1, suffix= "m", variant="slider", min=1, max=12)
     tab_1.section_2.bldgScaleF = NumberField(" Bldg Window Size", default= 0.5, step= 0.1, suffix= "m", variant="slider", min=0.5, max=0.8)
     
-    tab_1.section_3 = Section("Tower Design Feature")
+    tab_1.section_3 = Section("Tower Design Features")
     tab_1.section_3.xJagBool = OptionField("Jaggered Bldg in X-Axis", options = ["True", "False"], default = "False")
     tab_1.section_3.yJagBool = OptionField("Jaggered Bldg in Y-Axis", options = ["True", "False"], default = "False")
     tab_1.section_3.jagV = NumberField("Jaggered Value", default= 0, step= 1, suffix= "m", variant="slider", min=0, max=5)
@@ -638,7 +640,7 @@ class ModelController(ViktorController):
         return PlotlyResult(plotfig1.to_json())
 
 
-    @PlotlyView("Building Graph", duration_guess = 1) 
+    @PlotlyView("Building Graph", duration_guess = 200) 
     def Building_Graph(self, params, **kwargs ):
         # create graph
 
@@ -708,9 +710,9 @@ class ModelController(ViktorController):
         # return(PlotlyResult(twrPlotFig.to_json()))
 
 
-    def test(self, params, **kwargs ):
-        print("print Params, Def without visualisation")
-        print(params.bldgNoOfFlr)
+    # def test(self, params, **kwargs ):
+    #     print("print Params, Def without visualisation")
+    #     print(params.bldgNoOfFlr)
 
     # def hbModel_download(self, params, **kwargs):
     #     return DownloadResult(file_content='self.hbModel', file_name='Topo_HB_Model.hbjson')
