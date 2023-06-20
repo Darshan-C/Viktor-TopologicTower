@@ -15,7 +15,7 @@ Topologic Features tab contains parameter/inputs to perform topologic features o
 centre-top tabs are used to visualise the Tower and all the other function. The following snaps will go through all the visualisation tabs.
 
 <!-- ### Tab 1- Tower -->
-### Tab 1- Tower ! [alt text2](./images/Introduction_Mark.png "Introduction")
+### Tab 1- Tower ![alt text2](./images/Introduction_Mark.png "Introduction")
 
 Tower tab visualise the complete tower design.
 ### Tab 2- Internal Faces
