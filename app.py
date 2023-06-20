@@ -92,13 +92,13 @@ class ModelController(ViktorController):
     # hbModel  = None
 
     
-    def __init__(self ): 
-        print('inside constructor')
-        self.initialization()
+    # def __init__(self ): 
+    #     print('inside constructor')
+    #     self.initialization()
     
-    # to prep-process and create objects
-    def initialization(self):
-        print('print params.tab_1.section_1.PodNoOfFlr')
+    # # to prep-process and create objects
+    # def initialization(self):
+    #     print('print params.tab_1.section_1.PodNoOfFlr')
  
     @PlotlyView("Tower", duration_guess = 800) 
     def createPodium1(self, params, **kwargs ):
