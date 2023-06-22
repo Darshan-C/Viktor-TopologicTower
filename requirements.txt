@@ -1,2 +1,2 @@
-viktor==14.0.0
+viktor==14.2.1
 topologicpy == 0.4.27

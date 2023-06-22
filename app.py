@@ -99,9 +99,9 @@ class ModelController(ViktorController):
     # # to prep-process and create objects
     # def initialization(self):
     #     print('print params.tab_1.section_1.PodNoOfFlr')
- 
-    @PlotlyView("Tower", duration_guess = 800) 
-    def createPodium1(self, params, **kwargs ):
+    
+     
+    def createPodium1(self, params):
         # input parameters
         #Tab 1
 
@@ -202,12 +202,54 @@ class ModelController(ViktorController):
                                         tranDict=False, tolerance= 0.0001))
 
         # Adding aperture to the each podium floors
-        global compPodFlrs
+        # global compPodFlrs
         compPodFlrs = []                                                                  # empty list to add floors with aperture
         # iterating through each floor and cluster aperture
         for eachFlr, echAperClu in zip(comPodFlrs,aperCluFlrs):
             # adding apertures to each floor
             compPodFlrs.append(Topology.AddApertures(eachFlr, Cluster.FreeFaces(echAperClu)))
+
+        return(compPodFlrs)
+    
+    
+   
+    def createPodium2(self, params):
+        # input parameters
+        #Tab 1
+        compPodFlrs = self.createPodium1(params)
+
+        podL = params.tab_1.section_1.podL
+        podW = params.tab_1.section_1.podW
+        podWsplit = params.tab_1.section_1.podWsplit
+        podLsplit = params.tab_1.section_1.podLsplit
+        podFlrHt = params.tab_1.section_1.podFlrHt
+        PodNoOfFlr = params.tab_1.section_1.PodNoOfFlr
+        coreL = params.tab_1.section_1.coreL
+        coreW = params.tab_1.section_1.coreW
+        PodscaleF = params.tab_1.section_1.PodscaleF
+        #Tab 2
+        bldgL = params.tab_1.section_1.podL/2          # BuildingLength
+        bldgW = params.tab_1.section_1.podW/3      # BuildingWidth
+        bldgWsplit = params.tab_1.section_2.bldgWsplit
+        bldgLsplit = params.tab_1.section_2.bldgLsplit
+        bldgFlrHt = params.tab_1.section_2.bldgFlrHt
+        bldgNoOfFlr = params.tab_1.section_2.bldgNoOfFlr
+        bldgScaleF = params.tab_1.section_2.bldgScaleF
+        #Tab 3
+        # Section 1 - Building design parameters
+        xJagBool = params.tab_1.section_3.xJagBool
+        yJagBool = params.tab_1.section_3.yJagBool
+        jagV = params.tab_1.section_3.jagV
+        scaleF = params.tab_1.section_3.scaleF
+        scaleV = params.tab_1.section_3.scaleV
+        rotateV = params.tab_1.section_3.rotateV
+        # Section 2 - Topologic Feature
+        PodFloorNo = params.tab_2.PodFloorNo
+        bldgFloorNo = params.tab_2.bldgFloorNo
+        cellCheck = params.tab_2.cellCheck
+        IntParFace = params.tab_2.IntParFace
+        extParFace = params.tab_2.extParFace
+
         # getting aperture
         flrPodApr = []                                                                          # empty list to collect apertures of each floor
         # iterating through each floor and cluster aperture
@@ -231,7 +273,50 @@ class ModelController(ViktorController):
         # Flattening the list of cell
         fCellPod= Helper.Flatten(CellPod)
 
-        """ Create building """ 
+        return fCellPod, winPodWire, flrPodApr
+
+    """ Create building """ 
+    def createBuilding1(self, params):
+        
+        # allCompo = createPodium2(self, params, **kwargs)
+        # fCellPod = allCompo[0]
+        # winPodWire = allCompo[1]
+        # flrPodApr = allCompo[2]
+
+        # input parameters
+        #Tab 1
+
+        podL = params.tab_1.section_1.podL
+        podW = params.tab_1.section_1.podW
+        podWsplit = params.tab_1.section_1.podWsplit
+        podLsplit = params.tab_1.section_1.podLsplit
+        podFlrHt = params.tab_1.section_1.podFlrHt
+        PodNoOfFlr = params.tab_1.section_1.PodNoOfFlr
+        coreL = params.tab_1.section_1.coreL
+        coreW = params.tab_1.section_1.coreW
+        PodscaleF = params.tab_1.section_1.PodscaleF
+        #Tab 2
+        bldgL = params.tab_1.section_1.podL/2          # BuildingLength
+        bldgW = params.tab_1.section_1.podW/3      # BuildingWidth
+        bldgWsplit = params.tab_1.section_2.bldgWsplit
+        bldgLsplit = params.tab_1.section_2.bldgLsplit
+        bldgFlrHt = params.tab_1.section_2.bldgFlrHt
+        bldgNoOfFlr = params.tab_1.section_2.bldgNoOfFlr
+        bldgScaleF = params.tab_1.section_2.bldgScaleF
+        #Tab 3
+        # Section 1 - Building design parameters
+        xJagBool = params.tab_1.section_3.xJagBool
+        yJagBool = params.tab_1.section_3.yJagBool
+        jagV = params.tab_1.section_3.jagV
+        scaleF = params.tab_1.section_3.scaleF
+        scaleV = params.tab_1.section_3.scaleV
+        rotateV = params.tab_1.section_3.rotateV
+        # Section 2 - Topologic Feature
+        PodFloorNo = params.tab_2.PodFloorNo
+        bldgFloorNo = params.tab_2.bldgFloorNo
+        cellCheck = params.tab_2.cellCheck
+        IntParFace = params.tab_2.IntParFace
+        extParFace = params.tab_2.extParFace
 
         #create vertex for building base
         centrePodTop = Vertex.ByCoordinates(0,0,PodNoOfFlr*podFlrHt)
@@ -416,12 +501,27 @@ class ModelController(ViktorController):
                 cluBldgWin.append(Cluster.ByTopologies(list))
 
         # Adding aperture to the each podium floors
-        global compBldgFlrs
+        # global compBldgFlrs
         compBldgFlrs =[]                                   # empty list to collect floors
         # iterating through each floor and window cluster
         for echFlr, echBldgAprClu in zip(comBldgFlrs, cluBldgWin):
             # adding aperture
             compBldgFlrs.append(Topology.AddApertures(echFlr, Cluster.FreeFaces(echBldgAprClu)))
+        return compBldgFlrs, extBldgWindow
+
+
+
+    def createBuilding2(self, params):
+           
+        allCompo_createPodium2 = self.createPodium2(params)
+        fCellPod = allCompo_createPodium2[0]
+        winPodWire = allCompo_createPodium2[1]
+        flrPodApr = allCompo_createPodium2[2]
+
+        allCompo_createBuilding1 = self.createBuilding1(params)
+        compBldgFlrs = allCompo_createBuilding1[0]
+        extBldgWindow = allCompo_createBuilding1[1]
+        
         # getting aperture
         flrBldgApr = []                                    # empty list to collect windows aperture
         # iterating through each floors
@@ -434,7 +534,7 @@ class ModelController(ViktorController):
             for echWin in list:
                 #extracting wire
                 winBldgWire.append(Face.Wire(echWin))
-
+    
         # extracting cells of each building floor : list in list
         CellBldg = []                                       # empty list to collect cell of each floor
         # iterating through each floor
@@ -446,31 +546,27 @@ class ModelController(ViktorController):
         fCellBldg = Helper.Flatten(CellBldg)
 
         # merge all cells list
-        global twrCells
+        # global twrCells
         twrCells = fCellPod + fCellBldg
         # merge aperture wire
         twrAprWire = winPodWire + winBldgWire
         # merge aperture face
         twrAprFace = flrPodApr + extBldgWindow
-        # merge all cellComplex list
-        global twrCellComplex
-        twrCellComplex = compPodFlrs + compBldgFlrs
-
-        """ vvv --- whole tower visualisation --- vvv """
-
-        podGeo = Plotly.DataByTopology(Cluster.ByTopologies(fCellPod), faceLegendLabel = "Podium", 
-                                    faceColor='rgba(255, 255, 255, 0.8)')
-        bldgGeo = Plotly.DataByTopology(Cluster.ByTopologies(fCellBldg), faceLegendLabel = "Tower", 
-                                    faceColor='rgba(255, 255, 255, 0.8)')
-
-        aprFaceGeo = Plotly.DataByTopology(Cluster.ByTopologies(Helper.Flatten(twrAprFace)), faceLegendLabel= "Aperture" , faceColor='rgba(198, 244, 248, 0.8)')
-        twrPlotFig = Plotly.FigureByData(podGeo + bldgGeo + aprFaceGeo)
-        return PlotlyResult(twrPlotFig.to_json())
+        
+        return twrCells, fCellPod, fCellBldg, twrAprWire, twrAprFace
     
 
+    def wallFunc(self, params ):
 
-    @PlotlyView("Internal Faces", duration_guess = 800) 
-    def InteriorWalls(self, params, **kwargs ):
+        compPodFlrs = self.createPodium1(params)
+        allCompo_createBuilding1 = self.createBuilding1(params)
+        compBldgFlrs = allCompo_createBuilding1[0]
+        # merge all cellComplex list
+        twrCellComplex = compPodFlrs + compBldgFlrs
+
+        allCompo_createBuilding2= self.createBuilding2( params)
+        twrCells=  allCompo_createBuilding2[0]
+
         PodNoOfFlr = params.tab_1.section_1.PodNoOfFlr
         bldgNoOfFlr = params.tab_1.section_2.bldgNoOfFlr
         # To check internal vertical and external faces of a particular podium and building floor
@@ -551,7 +647,7 @@ class ModelController(ViktorController):
         # create building wire
         twrTopoWires = Topology.SubTopologies(CellComplex.ByCells(twrCells), subTopologyType= "wire")
         "-------------------------------------------------------------------------------------------------"
-        global twrWireframeGeo
+        # global twrWireframeGeo
         twrWireframeGeo = Plotly.DataByTopology(Cluster.ByTopologies(twrTopoWires), edgeLabelKey= "Tower wireframe" , edgeColor='rgba(8, 14, 44, .5)',edgeWidth=1)
 
         # visualisation of whole tower internal and external faces
@@ -585,11 +681,37 @@ class ModelController(ViktorController):
         
         "-------------------------------------------------------------------------------------------------"
         int_Faces = [allIntFacePlotFig, indIntFacePlotFig]
-        global ext_Faces
+        # global ext_Faces
         ext_Faces = [allIExtFacePlotFig, indExtFacePlotFig]
         
         IntParFace = params.tab_2.IntParFace
+        
+        return(int_Faces, ext_Faces)
 
+    @PlotlyView("Tower", duration_guess = 800)
+    def visTower(self, params, **kwargs):
+        
+        allCompo_createBuilding2= self.createBuilding2(params)
+        fCellPod=  allCompo_createBuilding2[1]
+        fCellBldg = allCompo_createBuilding2[2]
+        twrAprFace=  allCompo_createBuilding2[4]
+
+        """ vvv --- whole tower visualisation --- vvv """
+
+        podGeo = Plotly.DataByTopology(Cluster.ByTopologies(fCellPod), faceLegendLabel = "Podium", 
+                                    faceColor='rgba(255, 255, 255, 0.8)')
+        bldgGeo = Plotly.DataByTopology(Cluster.ByTopologies(fCellBldg), faceLegendLabel = "Tower", 
+                                    faceColor='rgba(255, 255, 255, 0.8)')
+
+        aprFaceGeo = Plotly.DataByTopology(Cluster.ByTopologies(Helper.Flatten(twrAprFace)), faceLegendLabel= "Aperture" , faceColor='rgba(198, 244, 248, 0.8)')
+        twrPlotFig = Plotly.FigureByData(podGeo + bldgGeo + aprFaceGeo)
+        return PlotlyResult(twrPlotFig.to_json())
+    
+    @PlotlyView("Internal Faces", duration_guess= 800)
+    def VisFacesIntFaces(self, params, **kwargs):
+
+        int_Faces = self.wallFunc(params)[0]
+        IntParFace = params.tab_2.IntParFace
         if IntParFace == "True":
             return(PlotlyResult(int_Faces[1].to_json()))
         
@@ -598,7 +720,9 @@ class ModelController(ViktorController):
 
 
     @PlotlyView("External Faces", duration_guess =  800) 
-    def Internal_faces(self, params, **kwargs ):
+    def VisFacesExtFaces(self, params, **kwargs ):
+        ext_Faces = self.wallFunc(params)[1]
+
         extParFace = params.tab_2.extParFace       
         if extParFace == "True":
             return(PlotlyResult(ext_Faces[1].to_json()))
@@ -607,9 +731,17 @@ class ModelController(ViktorController):
             return(PlotlyResult(ext_Faces[0].to_json()))
 
 
-    @PlotlyView("Adjacent Blocks", duration_guess = 600) 
-    def Adjacent_block(self, params, **kwargs ):
 
+    @PlotlyView("Adjacent Blocks", duration_guess = 600) 
+    def VisAdjacent_block(self, params, **kwargs ):
+
+        allCompo_createBuilding2 = self.createBuilding2(params)
+        twrCells = allCompo_createBuilding2[0]
+
+        # create building wire
+        twrTopoWires = Topology.SubTopologies(CellComplex.ByCells(twrCells), subTopologyType= "wire")
+        twrWireframeGeo = Plotly.DataByTopology(Cluster.ByTopologies(twrTopoWires), 
+                                                edgeLabelKey= "Tower wireframe" , edgeColor='rgba(8, 14, 44, .5)',edgeWidth=1)
         #select cell to check its adjacent topology
         cellCheck = params.tab_2.cellCheck
 
@@ -641,8 +773,12 @@ class ModelController(ViktorController):
 
 
     @PlotlyView("Building Graph", duration_guess = 200) 
-    def Building_Graph(self, params, **kwargs ):
+    def VisBuilding_Graph(self, params, **kwargs ):
         # create graph
+
+        allCompo_createBuilding2 = self.createBuilding2(params)
+        twrCells = allCompo_createBuilding2[0]
+
 
         twrGraph = Graph.ByTopology(Cluster.ByTopologies(twrCells), direct=True, directApertures=False, viaSharedTopologies=True,
                                     viaSharedApertures=False, toExteriorTopologies=True, toExteriorApertures=False,
@@ -655,6 +791,9 @@ class ModelController(ViktorController):
         plotfig1 = Plotly.FigureByData(twrGraphGeo + twrGeoFade)                                         # plot by figure
         # Plotly.Show(plotfig1, renderer = 'notebook')
         return PlotlyResult(plotfig1.to_json())
+    
+
+
         
     # @PlotlyView("HoneyBee Model", duration_guess = 800) 
     # def HoneyBee_Model(self, params, **kwargs ):
