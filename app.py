@@ -28,7 +28,7 @@ class Parametrization(ViktorParametrization) :
     tab_0 = Tab ("Introduction")
     tab_0.section_1 = Section("About")
     tab_0.section_1.text_1= Text(" The project involves using a Topologic Python library to create a tower within the VIKTOR app. The main objective of this project is to demonstrate the integration of the Topologic library with the VIKTOR app.\nThe integration of the Topologic library with the VIKTOR app enables users to explore and manipulate the tower's design and some features, allowing for a more interactive and dynamic architectural experience. This project aims to showcase the seamless integration of these two technologies, highlighting the potential for advanced geometric modeling and design analysis capabilities within the VIKTOR app.\n")
-    tab_0.section_1.text_2 = Text(" Note: To run the app, please sequentially go through the tab, i.e., Podium > Internal Faces > External Faces > Adjacent Blocks > Building Graph")
+    tab_0.section_1.text_2 = Text(" Note: For exploration, click on the Tower Parameters tab, so you can manipulate the building design, further by Topologic Feature tab you can play with some of the features of Topologicpy. ")
     
     tab_0.section_2 = Section("More Info")
     tab_0.section_2.text_1  = Text("Tower tab visualise the complete tower design.")
@@ -38,7 +38,7 @@ class Parametrization(ViktorParametrization) :
     tab_0.section_2.text_5 = Text("Building Graph create a graph of a designed building.\n")
 
 
-    tab_1 = Tab("Tower parameters")
+    tab_1 = Tab("Tower Parameters")
 
     tab_1.section_1 = Section("Podium Parameters")
     tab_1.section_1.podL = NumberField( "Podium Length", default= 30, step= 2, suffix= "m")
@@ -793,6 +793,19 @@ class ModelController(ViktorController):
         return PlotlyResult(plotfig1.to_json())
     
 
+
+
+    # @PlotlyView("Tower", duration_guess = 800)
+    # def get_download_result(self, params, **kwargs):
+        
+    #     allCompo_createBuilding2= self.createBuilding2(params)
+    #     fCellPod=  allCompo_createBuilding2[1]
+    #     fCellBldg = allCompo_createBuilding2[2]
+    #     twrAprFace=  allCompo_createBuilding2[4]
+
+    #     twrCluster = Cluster.ByTopologies([fCellPod, fCellBldg, twrAprFace])
+
+    #     return(DownloadResult(file_content='', file_name='Topologic_Tower.txt'))
 
         
     # @PlotlyView("HoneyBee Model", duration_guess = 800) 
